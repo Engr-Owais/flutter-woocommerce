@@ -30,25 +30,41 @@ class AuthViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  // Future<void> loginApi(dynamic data, BuildContext context) async {
-  //   setLoading(true);
+  Future<void> loginApi(dynamic data, BuildContext context) async {
+    setLoading(true);
 
-  //   _myRepo.loginApi(data).then((value) {
-  //     setLoading(false);
+    _myRepo.loginApi(data).then((value) async {
+      setLoading(false);
+      final prefs = await SharedPreferences.getInstance();
 
-  //     Utils.flushBarErrorMessage('Login Successfully', context);
-  //     Navigator.pushNamed(context, RoutesName.home);
-  //     if (kDebugMode) {
-  //       print(value.toString());
-  //     }
-  //   }).onError((error, stackTrace) {
-  //     setLoading(false);
-  //     Utils.flushBarErrorMessage(error.toString(), context);
-  //     if (kDebugMode) {
-  //       print(error.toString());
-  //     }
-  //   });
-  // }
+      final loginUserData = json.encode({
+        'token': value['data']['token'],
+        'displayName': value['data']['displayName'],
+        'userEmail': value['data']['email'],
+        'firstName': value['data']['firstName'],
+        'lastName': value['data']['lastName'],
+        'userId': value['data']['id'],
+      });
+
+      if (prefs.containsKey('userData')) {
+        prefs.clear();
+        prefs.setString('userData', loginUserData);
+      } else {
+        prefs.setString('userData', loginUserData);
+      }
+      Utils.flushBarErrorMessage('Login Successfully', context);
+      Navigator.pushNamed(context, RoutesName.home);
+      if (kDebugMode) {
+        print(value.toString());
+      }
+    }).onError((error, stackTrace) {
+      setLoading(false);
+      Utils.flushBarErrorMessage(error.toString(), context);
+      if (kDebugMode) {
+        print(error.toString());
+      }
+    });
+  }
 
   Future<void> signUpApi(dynamic data, BuildContext context) async {
     print("object");
@@ -68,7 +84,12 @@ class AuthViewModel with ChangeNotifier {
         'lastName': value['last_name'],
       });
 
-      prefs.setString('userData', userdata);
+      if (prefs.containsKey('userData')) {
+        prefs.clear();
+        prefs.setString('userData', userdata);
+      } else {
+        prefs.setString('userData', userdata);
+      }
 
       // String encodedData = UserModel.encode(userData);
       // await prefs.setString('userData', encodedData);

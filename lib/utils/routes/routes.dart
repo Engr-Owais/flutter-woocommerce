@@ -6,6 +6,7 @@ import 'package:mvvm/view/home_screen.dart';
 import 'package:mvvm/view/login_view.dart';
 import 'package:mvvm/view/orderDetail.dart';
 import 'package:mvvm/view/order_history.dart';
+import 'package:mvvm/view/payment_method.dart';
 import 'package:mvvm/view/signp_view.dart';
 import 'package:mvvm/view/splash_view.dart';
 
@@ -43,6 +44,10 @@ class Routes {
         return MaterialPageRoute(
           builder: (BuildContext context) => OrderDetails(),
           settings: RouteSettings(arguments: settings.arguments),
+        );
+      case RoutesName.payment:
+        return MaterialPageRoute(
+          builder: (BuildContext context) => PaymentMethodScreen(),
         );
 
       default:

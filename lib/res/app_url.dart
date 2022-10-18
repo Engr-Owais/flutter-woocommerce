@@ -19,4 +19,5 @@ class AppUrl {
   static String products = "products";
   static String categoriesURL = "products/categories";
   static String orders = 'orders';
+  static String payment = 'payment_gateways/bacs';
 }

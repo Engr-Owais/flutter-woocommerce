@@ -42,6 +42,7 @@ class UserModel {
     data['value'] = this.token;
     data['id'] = this.custId;
     data['email'] = this.email;
+    
 
     return data;
   }

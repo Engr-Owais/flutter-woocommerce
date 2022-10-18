@@ -57,9 +57,12 @@ class CartModel with ChangeNotifier {
         jsonDecode(prefs.getString('userData')!) as Map<String, dynamic>;
     if (IssharedCartData) {
       String? items = await prefs.getString('cartData');
+
       List<Cart> allItems = Cart.decode(items!);
       _cartItems = allItems.where((element) {
-        print(element.userId.toString() + extractUser['userId'].toString());
+        print("element.userId ${element.userId} "
+            "hehehe"
+            " ${extractUser['userId']}");
         return element.userId == extractUser['userId'];
       }).toList();
       sum = _cartItems.fold(0, (sum, element) => sum! + element.price!);
@@ -77,11 +80,8 @@ class CartModel with ChangeNotifier {
       Utils.flushBarErrorMessage('Order Placed Successfully', context);
       prefs.remove('cartData');
 
-      Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => WebViewScreen(),
-          ));
+      
+      Navigator.pushReplacementNamed(context, RoutesName.payment);
       if (kDebugMode) {
         print(value.toString());
       }

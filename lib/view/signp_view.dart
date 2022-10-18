@@ -1,9 +1,13 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:mvvm/model/customer.dart';
 import 'package:mvvm/res/components/round_button.dart';
 import 'package:mvvm/utils/utils.dart';
 import 'package:mvvm/view_model/auth_view_model.dart';
 import 'package:provider/provider.dart';
+
+import '../utils/routes/routes_name.dart';
 
 class SignUpView extends StatefulWidget {
   const SignUpView({Key? key}) : super(key: key);
@@ -140,11 +144,11 @@ class _SignUpViewState extends State<SignUpView> {
                 } else {
                   authViewMode.signUpApi(
                       CustomerModel(
-                        email: _emailController.text.toString(),
-                        firstName: _firstNameController.text,
-                        lastName: _lastNameController.text,
-                        password: _passwordController.text.toString(),
-                      ),
+                          email: _emailController.text.toString(),
+                          firstName: _firstNameController.text,
+                          lastName: _lastNameController.text,
+                          password: _passwordController.text.toString(),
+                          username: Random().nextInt(1000).toString()),
                       context);
                   print('api hit');
                 }
@@ -153,11 +157,11 @@ class _SignUpViewState extends State<SignUpView> {
             SizedBox(
               height: height * .02,
             ),
-            // InkWell(
-            //     onTap: () {
-            //       Navigator.pushNamed(context, RoutesName.login);
-            //     },
-            //     child: Text("Already  hace an accont? Logi"))
+            InkWell(
+                onTap: () {
+                  Navigator.pushNamed(context, RoutesName.login);
+                },
+                child: Text("Already  hace an accont? Login"))
           ],
         ),
       ),

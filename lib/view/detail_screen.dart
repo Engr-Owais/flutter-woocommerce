@@ -1,12 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:mvvm/model/products.dart';
+import 'package:mvvm/view_model/cartViewModel.dart';
 import 'package:mvvm/view_model/detail_view_model.dart';
 import 'package:provider/provider.dart';
 
 import '../utils/routes/routes_name.dart';
 
-class DeatilScreenView extends StatelessWidget {
+class DeatilScreenView extends StatefulWidget {
+  @override
+  State<DeatilScreenView> createState() => _DeatilScreenViewState();
+}
+
+class _DeatilScreenViewState extends State<DeatilScreenView> {
   final DetailViewViewModel detailViewViewModel = DetailViewViewModel();
+
+  @override
+  void initState() {
+    super.initState();
+    detailViewViewModel.CartCounterNotifier();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,12 +28,34 @@ class DeatilScreenView extends StatelessWidget {
       appBar: AppBar(
         title: Text("Cart"),
         actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.pushNamed(context, RoutesName.cart);
-            },
-            icon: Icon(Icons.shop),
-          )
+          ChangeNotifierProvider<DetailViewViewModel>(
+              create: (BuildContext context) => detailViewViewModel,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Stack(
+                  children: [
+                    Consumer<DetailViewViewModel>(
+                        builder: (context, cartCounter, child) {
+                      return Positioned(
+                          left: 0.0,
+                          top: 0.0,
+                          child: CircleAvatar(
+                            radius: 10,
+                            backgroundColor: Colors.amber,
+                            child: Center(
+                              child: Text("${cartCounter.value.toString()}"),
+                            ),
+                          ));
+                    }),
+                    IconButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, RoutesName.cart);
+                      },
+                      icon: Icon(Icons.shop),
+                    ),
+                  ],
+                ),
+              )),
         ],
       ),
       body: ChangeNotifierProvider<DetailViewViewModel>(
@@ -79,7 +113,7 @@ class DeatilScreenView extends StatelessWidget {
                                         .decProduct(args.stockQuantity);
                                   }
                                 : () {},
-                            backgroundColor: args.stockQuantity != null
+                            backgroundColor: args.stockQuantity != 0
                                 ? Colors.amber
                                 : Colors.black,
                             child: Center(child: Icon(Icons.minimize_outlined)),
@@ -127,6 +161,7 @@ class DeatilScreenView extends StatelessWidget {
                                 : Colors.grey[200],
                             onPressed: value.quantity != 0
                                 ? () {
+                                    
                                     value.addToCart(
                                       args.id,
                                       value.quantity,

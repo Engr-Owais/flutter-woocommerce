@@ -5,6 +5,7 @@ import 'package:mvvm/view_model/auth_view_model.dart';
 import 'package:mvvm/view_model/cartViewModel.dart';
 import 'package:mvvm/view_model/detail_view_model.dart';
 import 'package:mvvm/view_model/home_view_model.dart';
+import 'package:mvvm/view_model/payment_viewModel.dart';
 import 'package:mvvm/view_model/user_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -24,6 +25,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => HomeViewViewModel()),
         ChangeNotifierProvider(create: (_) => DetailViewViewModel()),
         ChangeNotifierProvider(create: (_) => CartModel()),
+        ChangeNotifierProvider(create: (_) => PaymentViewModel()),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

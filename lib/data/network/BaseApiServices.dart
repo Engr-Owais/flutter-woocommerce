@@ -15,7 +15,11 @@ abstract class BaseApiServices {
 
   Future<dynamic> getApiResponse(String url);
 
+  Future<dynamic> getPaymentDetails(String url);
+
   Future<dynamic> getPostApiResponse(String url, OrderModel data);
+
+  Future<dynamic> loginAPi(String url, dynamic data);
 
   Future<dynamic> getTokenSignUp(String url, CustomerModel data);
 }

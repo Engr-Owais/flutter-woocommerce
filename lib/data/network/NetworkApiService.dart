@@ -8,6 +8,8 @@ import 'package:mvvm/data/network/BaseApiServices.dart';
 import 'package:http/http.dart' as http;
 import 'package:mvvm/model/customer.dart';
 import 'package:mvvm/model/order.dart';
+
+import '../../model/login.dart';
 // import 'package:mvvm/model/products.dart';
 
 class NetworkApiService extends BaseApiServices {
@@ -159,7 +161,6 @@ class NetworkApiService extends BaseApiServices {
   Future<dynamic> getTokenSignUp(String url, CustomerModel data) async {
     dynamic responseJson;
     try {
-      print("ENTERT");
       final response = await http
           .post(
             Uri.parse(url +
@@ -177,6 +178,29 @@ class NetworkApiService extends BaseApiServices {
     return responseJson;
   }
 
+  @override
+  Future<dynamic> loginAPi(String url, dynamic data) async {
+    dynamic responseJson;
+    Map<String, String> requestheaders = {
+      'Content-type': 'application/x-www-form-urlencoded',
+    };
+    try {
+      print("ENTERT");
+      final response = await http
+          .post(
+            Uri.parse(url),
+            headers: requestheaders,
+            body: data,
+          )
+          .timeout(const Duration(seconds: 10));
+      print(response);
+      responseJson = returnHttpResponse(response);
+    } on SocketException {
+      throw FetchDataException("No Internet Conection");
+    }
+    return responseJson;
+  }
+
   dynamic returnHttpResponse(http.Response response) {
     switch (response.statusCode) {
       case 200:
@@ -186,6 +210,8 @@ class NetworkApiService extends BaseApiServices {
         dynamic responseJson = jsonDecode(response.body);
         return responseJson;
       case 400:
+        throw BadRequestException(jsonDecode(response.body)['message']);
+      case 403:
         throw BadRequestException(jsonDecode(response.body)['message']);
       case 500:
       case 404:
@@ -218,5 +244,24 @@ class NetworkApiService extends BaseApiServices {
                 'with status code' +
                 response.statusCode.toString());
     }
+  }
+
+  Future<dynamic> getPaymentDetails(String url) async {
+    dio.Response res;
+    dynamic finalRes;
+    try {
+      res = await dio.Dio().get(
+        url,
+        queryParameters: {
+          "consumer_key": "ck_d47bdf50021f8af4339a61d72d9a37077cb6f274",
+          "consumer_secret": "cs_a3aedead188d4dd4987def04e3662dfcce63db51",
+        },
+      );
+      finalRes = returnResponse(res);
+    } on SocketException {
+      throw FetchDataException('No Internet Connection');
+    }
+
+    return finalRes;
   }
 }

@@ -6,11 +6,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashServices {
   void checkAuthentication(BuildContext context) async {
-    print("object");
     final prefs = await SharedPreferences.getInstance();
     if (prefs.containsKey('userData')) {
       final extractedUserData =
           json.decode(prefs.getString('userData')!) as Map<String, Object>;
+      print("object ${extractedUserData['userId']}");
 
       if (extractedUserData == null || extractedUserData.isEmpty) {
         await Future.delayed(Duration(seconds: 3));

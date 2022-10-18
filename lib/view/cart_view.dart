@@ -1,10 +1,12 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mvvm/view_model/cartViewModel.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../model/order.dart';
 import '../res/components/round_button.dart';
 import 'Widget/FormField.dart';
 
@@ -91,36 +93,70 @@ class _CartViewState extends State<CartView> {
                                   final prefs =
                                       await SharedPreferences.getInstance();
 
-                                  // if (prefs.containsKey('userData')) {
-                                  //   final extractedUserData = json.decode(
-                                  //           prefs.getString('userData')!)
-                                  //       as Map<String, dynamic>;
-                                  //   cartProvider.orderApi(
-                                  //     OrderModel(
-                                  //       customer_id:
-                                  //           extractedUserData['userId'],
-                                  //       billing: Billing(
-                                  //           firstName: "John",
-                                  //           lastName: "Doe",
-                                  //           address1: "969 Market",
-                                  //           address2: "",
-                                  //           city: "San Francisco",
-                                  //           state: "CA",
-                                  //           postcode: "94103",
-                                  //           country: "US",
-                                  //           email:
-                                  //               extractedUserData['userEmail'],
-                                  //           phone: "022222222"),
-                                  //       shippingLines: [
-                                  //         ShippingLines(
-                                  //           total: value.sum.toString(),
-                                  //         ),
-                                  //       ],
-                                  //       lineItems: value.cart,
-                                  //     ),
-                                  //     context,
-                                  //   );
-                                  // }
+                                  if (prefs.containsKey('userData') &&
+                                      _adress.text != '') {
+                                    final extractedUserData = json.decode(
+                                            prefs.getString('userData')!)
+                                        as Map<String, dynamic>;
+                                    cartProvider.orderApi(
+                                      OrderModel(
+                                        customer_id:
+                                            extractedUserData['userId'],
+                                        billing: Billing(
+                                            firstName:
+                                                extractedUserData['firstName'],
+                                            lastName:
+                                                extractedUserData['lastName'],
+                                            address1: _adress.text,
+                                            address2: "",
+                                            city: "",
+                                            state: _state.text,
+                                            postcode: "94103",
+                                            country: _country.text,
+                                            email:
+                                                extractedUserData['userEmail'],
+                                            phone: "022222222"),
+                                        shippingLines: [
+                                          ShippingLines(
+                                            total: value.sum.toString(),
+                                          ),
+                                        ],
+                                        paymentMethod: 'basc',
+                                        shipping: Shipping(
+                                          firstName:
+                                              extractedUserData['firstName'],
+                                          lastName:
+                                              extractedUserData['lastName'],
+                                          address1: _adress.text,
+                                          address2: "",
+                                          city: "",
+                                          state: _state.text,
+                                          postcode: "94103",
+                                          country: _country.text,
+                                        ),
+                                        lineItems: value.cart,
+                                      ),
+                                      context,
+                                    );
+                                  } else {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                            duration: Duration(
+                                              milliseconds: 400,
+                                            ),
+                                            content: Text(
+                                                "Please Fill Out The Details For Shipping")));
+                                  }
+                                },
+                              )
+                            : SizedBox(),
+                        value.cart.isNotEmpty
+                            ? MaterialButton(
+                                child: Text("Add Details Of Address"),
+                                color: Colors.blue,
+                                onPressed: () async {
+                                  final prefs =
+                                      await SharedPreferences.getInstance();
 
                                   if (prefs.containsKey('userData')) {
                                     final extractedUserData =
@@ -132,6 +168,8 @@ class _CartViewState extends State<CartView> {
                                       builder: (context) {
                                         return Container(
                                           child: TestForm(
+                                            context: context,
+                                            loadingOrder: value.loading,
                                             firstName:
                                                 extractedUserData['firstName'],
                                             secName:
@@ -145,8 +183,7 @@ class _CartViewState extends State<CartView> {
                                       },
                                     );
                                   }
-                                },
-                              )
+                                })
                             : SizedBox(),
                       ],
                     );

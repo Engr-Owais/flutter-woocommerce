@@ -23,9 +23,10 @@ class UserViewModel with ChangeNotifier {
   //   }
   // }
 
+  
   Future<bool> remove() async {
     final SharedPreferences sp = await SharedPreferences.getInstance();
-    sp.remove('userData');
+    sp.clear();
     return true;
   }
 }

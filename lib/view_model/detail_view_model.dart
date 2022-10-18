@@ -9,8 +9,31 @@ import '../model/cartItem.dart';
 class DetailViewViewModel with ChangeNotifier {
   int _quantityOfProducts = 0;
   num get quantity => _quantityOfProducts;
-  List<Cart> cartItems = [];
+  List<Cart> _cartItems = [];
+  num get cartLength => _cartItems.length;
   num? sum;
+
+  num _value = 0;
+
+  num get value => _value;
+
+  CartCounterNotifier({List? cartItems}) async {
+    final prefs = await SharedPreferences.getInstance();
+    List cartItemsLenth = [];
+    if (prefs.containsKey('cartData')) {
+      String? items = await prefs.getString('cartData');
+      cartItemsLenth = Cart.decode(items!);
+      _value = cartItemsLenth.length;
+    } else {
+      if (cartItems!.isNotEmpty) {
+        _value = cartItems.length;
+      } else {
+        _value = 0;
+      }
+    }
+
+    notifyListeners();
+  }
 
   incProduct(int stock) {
     print(stock.toString() + " " + _quantityOfProducts.toString());
@@ -39,6 +62,8 @@ class DetailViewViewModel with ChangeNotifier {
     if (IssharedCartData) {
       String? items = await prefs.getString('cartData');
       cartItems = Cart.decode(items!);
+      print(cartItems);
+      CartCounterNotifier(cartItems: cartItems);
     }
     var cartIndex = cartItems.indexWhere((element) => element.prodId == prodId);
 
@@ -54,6 +79,7 @@ class DetailViewViewModel with ChangeNotifier {
           price: price * quantity,
           sum: sum,
           userId: userId['userId']));
+      CartCounterNotifier(cartItems: cartItems);
     } else {
       num? item = cartItems[cartIndex].quantity! + 1;
       num? pricing = cartItems[cartIndex].price! * item;
