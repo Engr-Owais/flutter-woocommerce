@@ -18,16 +18,16 @@ class ProductsModel {
     if (json['categories'] != null) {
       categories = [];
       json['categories'].forEach((v) {
-        categories.add(CategoryModel.fromJson(v));
+        categories!.add(CategoryModel.fromJson(v));
       });
     }
   }
-  late int id;
-  late String name;
-  late String price;
-  late List<CategoryModel> categories;
-  late String stockStatus;
-  late int stockQuantity;
+  int? id;
+  String? name;
+  String? price;
+  List<CategoryModel>? categories;
+  String? stockStatus;
+  num? stockQuantity;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -36,7 +36,7 @@ class ProductsModel {
     map['price'] = price;
     map['stock_quantity'] = stockQuantity;
     if (categories != null) {
-      map['categories'] = categories.map((v) => v.toJson()).toList();
+      map['categories'] = categories!.map((v) => v.toJson()).toList();
     }
     map['stock_status'] = stockStatus;
     return map;

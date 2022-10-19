@@ -1,16 +1,12 @@
-// import 'dart:convert';
+
 import 'dart:convert';
 import 'dart:io';
 import 'package:dio/dio.dart' as dio;
-import 'package:http/http.dart';
 import 'package:mvvm/data/app_excaptions.dart';
 import 'package:mvvm/data/network/BaseApiServices.dart';
 import 'package:http/http.dart' as http;
 import 'package:mvvm/model/customer.dart';
 import 'package:mvvm/model/order.dart';
-
-import '../../model/login.dart';
-// import 'package:mvvm/model/products.dart';
 
 class NetworkApiService extends BaseApiServices {
   @override

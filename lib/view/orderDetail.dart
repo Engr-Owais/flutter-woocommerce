@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mvvm/model/order.dart';
 import 'package:mvvm/model/orderHistory.dart';
 
 class OrderDetails extends StatefulWidget {

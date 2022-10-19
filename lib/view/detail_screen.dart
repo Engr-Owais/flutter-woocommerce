@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mvvm/model/products.dart';
-import 'package:mvvm/view_model/cartViewModel.dart';
 import 'package:mvvm/view_model/detail_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -93,11 +92,11 @@ class _DeatilScreenViewState extends State<DeatilScreenView> {
                 ],
               ),
               Text(
-                args.price.isNotEmpty ? "${args.price}" : "No Price",
+                args.price!.isNotEmpty ? "${args.price}" : "No Price",
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.w300),
               ),
               Text(
-                "${args.categories.first.name}",
+                "${args.categories!.first.name}",
                 style: TextStyle(fontSize: 14, fontWeight: FontWeight.w100),
               ),
               args.stockQuantity != null
@@ -110,7 +109,7 @@ class _DeatilScreenViewState extends State<DeatilScreenView> {
                             onPressed: args.stockQuantity != null
                                 ? () {
                                     detailViewViewModel
-                                        .decProduct(args.stockQuantity);
+                                        .decProduct(args.stockQuantity!);
                                   }
                                 : () {},
                             backgroundColor: args.stockQuantity != 0
@@ -135,7 +134,7 @@ class _DeatilScreenViewState extends State<DeatilScreenView> {
                           onPressed: args.stockQuantity != null
                               ? () {
                                   detailViewViewModel
-                                      .incProduct(args.stockQuantity);
+                                      .incProduct(args.stockQuantity!);
                                 }
                               : () {},
                           backgroundColor: args.stockQuantity != null
@@ -161,12 +160,11 @@ class _DeatilScreenViewState extends State<DeatilScreenView> {
                                 : Colors.grey[200],
                             onPressed: value.quantity != 0
                                 ? () {
-                                    
                                     value.addToCart(
-                                      args.id,
+                                      args.id!,
                                       value.quantity,
-                                      args.name,
-                                      num.parse(args.price),
+                                      args.name!,
+                                      num.parse(args.price!),
                                     );
                                     ScaffoldMessenger.of(context).showSnackBar(
                                         SnackBar(

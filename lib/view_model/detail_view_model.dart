@@ -35,7 +35,7 @@ class DetailViewViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  incProduct(int stock) {
+  incProduct(num stock) {
     print(stock.toString() + " " + _quantityOfProducts.toString());
     if (_quantityOfProducts != stock) {
       _quantityOfProducts = _quantityOfProducts + 1;
@@ -45,7 +45,7 @@ class DetailViewViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  decProduct(int stock) {
+  decProduct(num stock) {
     if (_quantityOfProducts != 0) {
       _quantityOfProducts = _quantityOfProducts - 1;
     } else {

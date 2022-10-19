@@ -12,7 +12,7 @@ class SplashServices {
           json.decode(prefs.getString('userData')!) as Map<String, Object>;
       print("object ${extractedUserData['userId']}");
 
-      if (extractedUserData == null || extractedUserData.isEmpty) {
+      if (extractedUserData == {} || extractedUserData.isEmpty) {
         await Future.delayed(Duration(seconds: 3));
         Navigator.pushNamed(context, RoutesName.signUp);
       } else {

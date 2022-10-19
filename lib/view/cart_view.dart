@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mvvm/view_model/cartViewModel.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -17,8 +16,6 @@ class CartView extends StatefulWidget {
 
 class _CartViewState extends State<CartView> {
   CartModel cartModel = CartModel();
-  late TextEditingController _firstName;
-  late TextEditingController _secName;
   late TextEditingController _adress;
   late TextEditingController _country;
   late TextEditingController _state;
@@ -27,8 +24,6 @@ class _CartViewState extends State<CartView> {
   @override
   void initState() {
     super.initState();
-    _firstName = TextEditingController();
-    _secName = TextEditingController();
     _adress = TextEditingController();
     _country = TextEditingController();
     _postCode = TextEditingController();

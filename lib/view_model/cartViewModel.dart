@@ -11,8 +11,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../model/cartItem.dart';
 import '../utils/routes/routes_name.dart';
 import '../utils/utils.dart';
-import '../view/webview_screen.dart';
-import 'user_view_model.dart';
 
 class CartModel with ChangeNotifier {
   List<Cart> _cartItems = [];

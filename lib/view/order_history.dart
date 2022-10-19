@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mvvm/model/orderHistory.dart';
-import 'package:mvvm/model/user_model.dart';
-import 'package:mvvm/utils/routes/routes.dart';
 import 'package:mvvm/utils/routes/routes_name.dart';
 import 'package:mvvm/view_model/order_history_viewmodel.dart';
 import 'package:provider/provider.dart';

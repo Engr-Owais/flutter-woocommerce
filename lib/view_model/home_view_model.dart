@@ -75,7 +75,7 @@ class HomeViewViewModel with ChangeNotifier {
 
   fetchCatProducts(int catId) {
     List<ProductsModel> listOfCatProd = productsList.data!
-        .where((element) => element.categories.first.id == catId)
+        .where((element) => element.categories!.first.id == catId)
         .toList();
 
     print("listOfCatProd $listOfCatProd");

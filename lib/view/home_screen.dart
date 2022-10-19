@@ -195,7 +195,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     .productsList.data![index]);
                                           },
                                           title: Text(model
-                                              .productsList.data![index].name),
+                                              .productsList.data![index].name!),
                                           subtitle: Column(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
@@ -204,12 +204,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                                           .price !=
                                                       ''
                                                   ? Text(model.productsList
-                                                      .data![index].price)
+                                                      .data![index].price!)
                                                   : Text("No Price"),
                                               Text(model
                                                   .productsList
                                                   .data![index]
-                                                  .categories
+                                                  .categories!
                                                   .first
                                                   .name
                                                   .toString()),
@@ -223,9 +223,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 color: model
                                                             .productsList
                                                             .data![index]
-                                                            .stockQuantity
-                                                            .toString() !=
-                                                        "null"
+                                                            .stockQuantity !=
+                                                        null
                                                     ? Colors.green
                                                     : Colors.red,
                                               )
