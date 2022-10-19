@@ -36,7 +36,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final userPrefernece = Provider.of<UserViewModel>(context);
-    // Initial Selected Value
 
     return Scaffold(
       appBar: AppBar(
@@ -54,7 +53,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 InkWell(
                     onTap: () {
                       userPrefernece.remove().then((value) {
-                        Navigator.pushNamed(context, RoutesName.signUp);
+                        Navigator.pushReplacementNamed(
+                            context, RoutesName.signUp);
                       });
                     },
                     child: Center(child: Icon(Icons.logout))),

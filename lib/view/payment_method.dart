@@ -25,15 +25,19 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          title: Text("PAY HERE"),
-        ),
         body: Container(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                Text(
+                  "PAYMENT METHOD",
+                  style: TextStyle(fontSize: 18),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
                 FutureBuilder<Payment>(
                   future: _payRepository.fetchPayMethod(),
                   builder: (context, snapshot) {

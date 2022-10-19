@@ -52,15 +52,18 @@ class _SignUpViewState extends State<SignUpView> {
 
     final height = MediaQuery.of(context).size.height * 1;
     return Scaffold(
-      appBar: AppBar(
-        title: Text('SingUp'),
-        centerTitle: true,
-      ),
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            Text(
+              "SIGN UP",
+              style: TextStyle(fontSize: 18),
+            ),
+            SizedBox(
+              height: 10,
+            ),
             TextFormField(
               controller: _firstNameController,
               keyboardType: TextInputType.name,
