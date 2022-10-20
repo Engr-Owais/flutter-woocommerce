@@ -11,14 +11,14 @@ class HomeRepository {
   BaseApiServices _apiServices = NetworkApiService();
 
   Future<List<ProductsModel>> fetchProductsList(
-      String catId, String search, int pageNum, int pageSize) async {
+      String catId, String search, int pageNum) async {
     try {
       dynamic response = await _apiServices.getGetApiResponse(
-          url: AppUrl.myurl + AppUrl.products,
-          catId: catId,
-          search: search,
-          pageNum: pageNum,
-          pageSize: pageSize);
+        url: AppUrl.myurl + AppUrl.products,
+        catId: catId,
+        search: search,
+        pageNum: pageNum,
+      );
       List jsonResponse = response;
       return jsonResponse.map((data) => ProductsModel.fromJson(data)).toList();
     } catch (e) {

@@ -65,7 +65,6 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: ChangeNotifierProvider<HomeViewViewModel>(
         create: (BuildContext context) => homeViewViewModel,
-        // builder: ,
         child: Consumer<HomeViewViewModel>(builder: (context, model, _) {
           if (model.catList.status! == Status.LOADING) {
             return Center(child: CircularProgressIndicator());
@@ -94,11 +93,13 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: InkWell(
                                 onTap: () {
                                   controller.clear();
-                                  controller.text = '';
-
+                                  model.allProd.clear();
                                   model.setChip(
                                       model.catList.data![index].id!.toString(),
                                       index);
+                                  print(model.catList.data![index].id!
+                                      .toString());
+
                                   model.fetchProdListApi(
                                     page,
                                     model.catList.data![index].id!.toString(),
@@ -125,11 +126,15 @@ class _HomeScreenState extends State<HomeScreen> {
                       MaterialButton(
                         child: Text("Cler Filters"),
                         onPressed: () {
+                          model.productsList.data!.clear();
                           model.chipSelected = '';
                           model.coloredChip = null;
-                          model.fetchProdListApi(page, '', '');
+                          controller.clear();
+                          page = 1;
+                          print("KKK $page");
+                          model.fetchProdListApi(1, '', '');
                         },
-                      )
+                      ),
                     ],
                   ),
                 ),
@@ -148,12 +153,12 @@ class _HomeScreenState extends State<HomeScreen> {
                           controller: controller,
                           decoration: new InputDecoration(
                               hintText: 'Search', border: InputBorder.none),
-                          // onChanged: (value) =>
-                          //     model.fetchProdListApi(model.chipSelected, value),
                         ),
                         trailing: IconButton(
                           icon: Icon(Icons.search),
                           onPressed: () {
+                            print("page $page");
+                            model.productsList.data!.clear();
                             model.fetchProdListApi(
                               page,
                               model.chipSelected,

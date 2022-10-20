@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 import 'dart:io';
 import 'package:dio/dio.dart' as dio;
@@ -11,11 +10,7 @@ import 'package:mvvm/model/order.dart';
 class NetworkApiService extends BaseApiServices {
   @override
   Future<dynamic> getGetApiResponse(
-      {String? url,
-      String? catId,
-      String? search,
-      int? pageNum,
-      int? pageSize}) async {
+      {String? url, String? catId, String? search, int? pageNum}) async {
     dynamic responseJson;
 
     Map<String, dynamic> queryParams = {
@@ -29,7 +24,7 @@ class NetworkApiService extends BaseApiServices {
       });
     }
 
-    if (search != null) {
+    if (search != '') {
       queryParams.addAll({
         'search': search,
       });
@@ -38,12 +33,6 @@ class NetworkApiService extends BaseApiServices {
     if (pageNum != null) {
       queryParams.addAll({
         'page': pageNum,
-      });
-    }
-
-    if (pageSize != null) {
-      queryParams.addAll({
-        'per_page': pageSize,
       });
     }
 

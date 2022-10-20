@@ -2,12 +2,12 @@ import 'package:mvvm/model/customer.dart';
 import 'package:mvvm/model/order.dart';
 
 abstract class BaseApiServices {
-  Future<dynamic> getGetApiResponse(
-      {String? url,
-      String? catId,
-      String? search,
-      int? pageNum,
-      int? pageSize});
+  Future<dynamic> getGetApiResponse({
+    String? url,
+    String? catId,
+    String? search,
+    int? pageNum,
+  });
 
   Future<dynamic> getCatResponse(String url);
 //

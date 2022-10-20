@@ -19,7 +19,7 @@ class HomeViewViewModel with ChangeNotifier {
   int? coloredChip;
 
   List<ProductsModel> allProd = [];
-  int pageSize = 10;
+  // int pageSize = 10;
 
   LodeMoreStatus _lodeMoreStatus = LodeMoreStatus.STABLE;
 
@@ -56,13 +56,12 @@ class HomeViewViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> fetchProdListApi(pageNum, 
-      String catId, String search) async {
+  Future<void> fetchProdListApi(
+      int pageNum, String catId, String search) async {
+    
     setProdList(ApiResponse.loading());
 
-    _myRepo
-        .fetchProductsList(catId, search, pageNum, this.pageSize)
-        .then((value) {
+    _myRepo.fetchProductsList(catId, search, pageNum).then((value) {
       allProd.addAll(value);
 
       setLoadingStatus(LodeMoreStatus.STABLE);
